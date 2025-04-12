@@ -1,4 +1,4 @@
-# Finals-Lab-Task-2 - Transforming ER Model to Relational Tables
+# [Finals-Lab-Task-2](https://github.com/user-attachments/files/19718896/LAB.TASK.2.docx)- Transforming ER Model to Relational Tables
 A step-by-step SQL project that transforms an ER model into relational tables. It includes the creation of **student**, **assignment**, and **submission** tables with proper primary keys, foreign keys, and relationships. 
 The submission table tracks multiple versions, modeling a many-to-many relationship between students and assignments.
 
