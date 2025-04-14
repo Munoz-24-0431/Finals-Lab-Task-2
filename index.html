@@ -41,6 +41,7 @@
             z-index: -1;
             background: radial-gradient(circle at center, #1a1b4b 0%, #0a0b1a 100%);
             opacity: 0.8;
+            animation: pulse-bg 15s ease infinite;
         }
 
         .container {
@@ -278,6 +279,85 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 20px rgba(157, 78, 221, 0.4);
         }
+
+        .relationship-details {
+            margin-top: 1.5rem;
+        }
+
+        .relationship-details h4 {
+            color: var(--accent-purple);
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .relationship-details ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .relationship-details li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .relationship-details li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        .project-description {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .project-description strong {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        /* Cosmic Dust */
+        .cosmic-dust {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            animation: dust 20s linear infinite;
+        }
+
+        @keyframes dust {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.6; }
+        }
     </style>
 </head>
 <body>
@@ -289,6 +369,41 @@
             <h1 class="title">Finals Lab Task 2</h1>
             <p class="subtitle">Transforming ER Model to Relational Tables</p>
         </header>
+
+        <section class="content-section">
+            <h2>Project Overview</h2>
+            <p class="project-description">
+                A step-by-step SQL project that transforms an ER model into relational tables. It includes the creation of <strong>student</strong>, <strong>assignment</strong>, and <strong>submission</strong> tables with proper primary keys, foreign keys, and relationships. The submission table tracks multiple versions, modeling a many-to-many relationship between students and assignments.
+            </p>
+            
+            <div class="table-info">
+                <h3>Table Relationships</h3>
+                <div class="relationship-details">
+                    <h4>1. student table</h4>
+                    <ul>
+                        <li>Primary Key: username</li>
+                        <li>Relationships:</li>
+                        <li>One-to-Many with submission: One student (username) can have many submissions.</li>
+                    </ul>
+
+                    <h4>2. assignment table</h4>
+                    <ul>
+                        <li>Primary Key: shortname</li>
+                        <li>Relationships:</li>
+                        <li>One-to-Many with submission: One assignment (shortname) can have many submissions.</li>
+                    </ul>
+
+                    <h4>3. submission table</h4>
+                    <ul>
+                        <li>Composite Primary Key: (username, shortname, version)</li>
+                        <li>Relationships:</li>
+                        <li>Many-to-One with student: Each submission belongs to one student.</li>
+                        <li>Many-to-One with assignment: Each submission is for one assignment.</li>
+                        <li>This models a Many-to-Many relationship between students and assignments, with version tracking multiple submissions.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
         <section class="content-section">
             <h2>Step by Step Process</h2>
@@ -379,11 +494,9 @@
     <script>
         // Create stars
         function createStars() {
-            const starsContainer = document.createElement('div');
-            starsContainer.className = 'stars';
-            document.body.appendChild(starsContainer);
-            
+            const starsContainer = document.querySelector('.stars');
             const numberOfStars = 200;
+
             for (let i = 0; i < numberOfStars; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -391,8 +504,18 @@
                 star.style.height = star.style.width;
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 1}s`);
                 starsContainer.appendChild(star);
+            }
+
+            // Add cosmic dust
+            for (let i = 0; i < 50; i++) {
+                const dust = document.createElement('div');
+                dust.className = 'cosmic-dust';
+                dust.style.left = `${Math.random() * 100}%`;
+                dust.style.animationDelay = `${Math.random() * 20}s`;
+                dust.style.opacity = Math.random();
+                document.body.appendChild(dust);
             }
         }
 
