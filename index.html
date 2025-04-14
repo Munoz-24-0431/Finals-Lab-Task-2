@@ -239,6 +239,26 @@
             transform: rotate(90deg);
         }
 
+        /* Add star bullet points */
+        ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        ul li {
+            position: relative;
+            margin-bottom: 0.8rem;
+        }
+
+        ul li::before {
+            content: '★';
+            color: var(--accent-blue);
+            position: absolute;
+            left: -1.5rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
@@ -302,10 +322,12 @@
         }
 
         .relationship-details li::before {
-            content: '•';
+            content: '★';
             position: absolute;
             left: 0;
             color: var(--accent-blue);
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         .project-description {
