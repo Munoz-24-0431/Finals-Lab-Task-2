@@ -87,6 +87,12 @@
             margin: 1rem 0;
             overflow-x: auto;
             position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .sql-code:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.3);
         }
 
         .sql-code::before {
@@ -111,6 +117,12 @@
             background: rgba(45, 50, 82, 0.3);
             padding: 1rem;
             border: 1px solid rgba(157, 78, 221, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .image-container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
         }
 
         .image-container img {
@@ -118,10 +130,6 @@
             height: auto;
             border-radius: 10px;
             transition: transform 0.5s ease;
-        }
-
-        .image-container:hover img {
-            transform: scale(1.02);
         }
 
         .image-overlay {
@@ -140,36 +148,103 @@
             opacity: 1;
         }
 
+        /* Custom cursor styles */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .custom-cursor.hover {
+            transform: scale(1.5);
+            background: rgba(157, 78, 221, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+            animation: trailFade 0.5s ease forwards;
+        }
+
+        /* Stars and cosmic effects */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        .cosmic-dust {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            animation: dust 20s linear infinite;
+        }
+
+        /* Table info styles */
         .table-info {
             background: rgba(45, 50, 82, 0.4);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 1rem 0;
             border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
         }
 
-        .table-info h3 {
+        .table-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.3);
+        }
+
+        .relationship-details li {
+            transition: all 0.3s ease;
+        }
+
+        .relationship-details li:hover {
+            transform: translateX(10px);
             color: var(--accent-blue);
-            margin-bottom: 1rem;
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
         }
 
-        .relationship-arrow {
-            display: inline-block;
-            margin: 0 0.5rem;
-            color: var(--accent-purple);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(157, 78, 221, 0.5); }
-            50% { text-shadow: 0 0 40px rgba(72, 191, 227, 0.8); }
-        }
-
+        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -179,6 +254,37 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(157, 78, 221, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(72, 191, 227, 0.8); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        @keyframes dust {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.2);
+            }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.6; }
         }
 
         /* Modal styles */
@@ -210,12 +316,6 @@
             box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
         }
 
-        .modal-content img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-        }
-
         .modal-close {
             position: absolute;
             top: 20px;
@@ -239,37 +339,7 @@
             transform: rotate(90deg);
         }
 
-        /* Add star bullet points */
-        ul {
-            list-style: none;
-            padding-left: 1.5rem;
-        }
-
-        ul li {
-            position: relative;
-            margin-bottom: 0.8rem;
-        }
-
-        ul li::before {
-            content: '★';
-            color: var(--accent-blue);
-            position: absolute;
-            left: -1.5rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
+        /* Download button styles */
         .download-section {
             text-align: center;
             margin: 3rem 0;
@@ -300,6 +370,183 @@
             box-shadow: 0 5px 20px rgba(157, 78, 221, 0.4);
         }
 
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--star-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+        }
+
+        /* Enhanced text interactions */
+        .step-title:hover {
+            transform: translateX(10px);
+            transition: transform 0.3s ease;
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
+        }
+
+        .table-info {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(157, 78, 221, 0.1),
+                rgba(72, 191, 227, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: galaxyShine 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes galaxyShine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+        .project-description {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            padding: 1.5rem;
+            background: rgba(45, 50, 82, 0.3);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-purple);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-description:hover {
+            transform: translateY(-5px) scale(1.01);
+            background: rgba(45, 50, 82, 0.5);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
+            border-left-color: var(--accent-blue);
+        }
+
+        .project-description::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(157, 78, 221, 0.1),
+                rgba(72, 191, 227, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: descriptionShine 3s linear infinite;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-description:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes descriptionShine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+        .project-description strong {
+            color: var(--accent-blue);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-description strong:hover {
+            color: var(--accent-purple);
+            text-shadow: 0 0 8px rgba(157, 78, 221, 0.5);
+        }
+
+        .project-objectives {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(45, 50, 82, 0.4);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .project-objectives:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.3);
+            border-left-color: var(--accent-purple);
+        }
+
+        .project-objectives h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-objectives:hover h3 {
+            transform: translateX(10px);
+            color: var(--accent-purple);
+            text-shadow: 0 0 8px rgba(157, 78, 221, 0.5);
+        }
+
+        .project-objectives ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .project-objectives li {
+            position: relative;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-objectives li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-objectives li:hover {
+            transform: translateX(10px);
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
+        }
+
+        .project-objectives li:hover::before {
+            transform: rotate(180deg);
+            color: var(--accent-purple);
+        }
+
         .relationship-details {
             margin-top: 1.5rem;
         }
@@ -308,6 +555,13 @@
             color: var(--accent-purple);
             margin: 1.5rem 0 0.5rem 0;
             font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .relationship-details h4:hover {
+            transform: translateX(10px);
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
         }
 
         .relationship-details ul {
@@ -319,6 +573,7 @@
             margin-bottom: 0.5rem;
             position: relative;
             padding-left: 1.5rem;
+            transition: all 0.3s ease;
         }
 
         .relationship-details li::before {
@@ -328,95 +583,439 @@
             color: var(--accent-blue);
             font-size: 0.8rem;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        .project-description {
-            line-height: 1.8;
+        .relationship-details li:hover::before {
+            transform: scale(1.2) rotate(180deg);
+            color: var(--accent-purple);
+        }
+
+        /* Enhanced modal styles */
+        .modal.active {
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced image container */
+        .image-container h3 {
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .image-container:hover h3 {
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
+        }
+
+        /* Enhanced SQL code */
+        .sql-code {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sql-code::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(157, 78, 221, 0.1),
+                rgba(72, 191, 227, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: sqlShine 3s linear infinite;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sql-code:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes sqlShine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+        /* Enhanced list styles */
+        ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        ul li {
+            position: relative;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        ul li::before {
+            content: '★';
+            color: var(--accent-blue);
+            position: absolute;
+            left: -1.5rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateX(10px);
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
+        }
+
+        ul li:hover::before {
+            transform: scale(1.2) rotate(180deg);
+            color: var(--accent-purple);
+        }
+
+        /* Enhanced subtitle */
+        .subtitle {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .subtitle:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
+        }
+
+        /* Additional enhanced features */
+        .content-section h2 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+
+        .content-section h2:hover::after {
+            width: 100%;
+        }
+
+        .step-section {
+            margin: 2rem 0;
+        }
+
+        .step-title {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .step-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent-purple);
+            margin-right: 1rem;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .step-title:hover::before {
+            height: 32px;
+            background: var(--accent-blue);
+        }
+
+        .relationship-arrow {
+            display: inline-block;
+            margin: 0 0.5rem;
+            color: var(--accent-purple);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Enhanced table info styles */
+        .table-info {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(157, 78, 221, 0.2);
             margin-bottom: 2rem;
         }
 
-        .project-description strong {
+        .table-info:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
+            border-color: var(--accent-blue);
+        }
+
+        .table-info h3 {
             color: var(--accent-blue);
-            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
         }
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+        .table-info:hover h3 {
+            transform: translateX(10px);
+            color: var(--accent-purple);
+            text-shadow: 0 0 8px rgba(157, 78, 221, 0.5);
         }
 
-        .star {
+        /* Enhanced list styles */
+        .step-list {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-list li {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-list li::before {
+            content: '★';
             position: absolute;
-            background: var(--star-color);
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
+        .step-list li:hover {
+            transform: translateX(10px);
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
         }
 
-        /* Cosmic Dust */
-        .cosmic-dust {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.5);
-            animation: dust 20s linear infinite;
+        .step-list li:hover::before {
+            transform: rotate(180deg);
+            color: var(--accent-purple);
         }
 
-        @keyframes dust {
-            from { transform: translateY(-100vh) rotate(0deg); }
-            to { transform: translateY(100vh) rotate(360deg); }
+        /* Enhanced relationship details */
+        .relationship-details {
+            background: rgba(45, 50, 82, 0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--accent-purple);
+            transition: all 0.3s ease;
         }
 
-        @keyframes pulse-bg {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 0.6; }
+        .relationship-details:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.3);
+            border-left-color: var(--accent-blue);
+        }
+
+        .relationship-details h4 {
+            color: var(--accent-purple);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .relationship-details h4:first-child {
+            margin-top: 0;
+        }
+
+        .relationship-details h4:hover {
+            color: var(--accent-blue);
+            transform: translateX(10px);
+            text-shadow: 0 0 8px rgba(72, 191, 227, 0.5);
         }
     </style>
 </head>
 <body>
     <div class="cosmic-background"></div>
     <div class="stars"></div>
+    <div class="custom-cursor"></div>
 
     <div class="container">
         <header class="header">
             <h1 class="title">Finals Lab Task 2</h1>
-            <p class="subtitle">Transforming ER Model to Relational Tables</p>
+            <p class="subtitle">ER Model to Relational Tables</p>
         </header>
 
         <section class="content-section">
             <h2>Project Overview</h2>
-            <p class="project-description">
-                A step-by-step SQL project that transforms an ER model into relational tables. It includes the creation of <strong>student</strong>, <strong>assignment</strong>, and <strong>submission</strong> tables with proper primary keys, foreign keys, and relationships. The submission table tracks multiple versions, modeling a many-to-many relationship between students and assignments.
-            </p>
+            <div class="project-description">
+                This project focuses on the transformation of an <strong>Entity-Relationship (ER) Model</strong> into <strong>Relational Database Tables</strong>. We'll implement a comprehensive database structure for managing student assignments and submissions, demonstrating the practical application of database design principles. The project showcases the creation of tables with appropriate relationships, primary keys, and foreign keys to ensure data integrity and efficient data management.
+            </div>
             
+            <div class="project-objectives">
+                <h3>Project Objectives</h3>
+                <ul>
+                    <li>Design and implement a normalized database structure</li>
+                    <li>Create tables with appropriate primary and foreign keys</li>
+                    <li>Establish proper relationships between tables</li>
+                    <li>Ensure data integrity through constraints</li>
+                    <li>Document the implementation process</li>
+                    <li>Demonstrate practical database design principles</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Database Schema Design</h2>
             <div class="table-info">
-                <h3>Table Relationships</h3>
+                <h3>Table Structures</h3>
+                <div class="relationship-details">
+                    <h4>1. Student Table</h4>
+                    <ul>
+                        <li>Primary Key: username (VARCHAR 50)</li>
+                        <li>Purpose: Stores unique student identifiers</li>
+                        <li>Relationships: One-to-Many with submissions</li>
+                    </ul>
+
+                    <h4>2. Assignment Table</h4>
+                    <ul>
+                        <li>Primary Key: shortname (VARCHAR 50)</li>
+                        <li>Fields:</li>
+                        <li>due_date (DATE) NOT NULL</li>
+                        <li>url (VARCHAR 255) NULL</li>
+                        <li>Relationships: One-to-Many with submissions</li>
+                    </ul>
+
+                    <h4>3. Submission Table</h4>
+                    <ul>
+                        <li>Composite Primary Key: (username, shortname, version)</li>
+                        <li>Fields:</li>
+                        <li>submit_date (DATE) NOT NULL</li>
+                        <li>data (TEXT)</li>
+                        <li>Foreign Keys:</li>
+                        <li>username references student(username)</li>
+                        <li>shortname references assignment(shortname)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Step by Step Process</h2>
+            <div class="table-info">
+                <h3>Implementation Steps</h3>
+                <div class="step-section">
+                    <h4 class="step-title">1. Create the student table</h4>
+                    <ul class="step-list">
+                        <li>Define username as a VARCHAR(50)</li>
+                        <li>Set username as the Primary Key</li>
+                    </ul>
+                    <div class="sql-code">
+                        <img src="https://github.com/user-attachments/assets/0ce8dffa-989c-4424-949d-665cb4f00e15" alt="Student Table Creation">
+                    </div>
+                    <div class="image-container" data-fullscreen>
+                        <img src="https://github.com/user-attachments/assets/7ba23ca6-88e8-4de0-9e3b-c8b265f58300" alt="Student Table Structure">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <h4 class="step-title">2. Create the assignment table</h4>
+                    <ul class="step-list">
+                        <li>Define shortname as a VARCHAR(50) and set it as the Primary Key</li>
+                        <li>Define due_date as a DATE NOT NULL</li>
+                        <li>Define url as a VARCHAR(255), which can be null</li>
+                    </ul>
+                    <div class="sql-code">
+                        <img src="https://github.com/user-attachments/assets/5893a6fc-d642-4af6-a096-7efa86581baa" alt="Assignment Table Creation">
+                    </div>
+                    <div class="image-container" data-fullscreen>
+                        <img src="https://github.com/user-attachments/assets/f0e0a2a6-344f-407f-862f-931c1e0f4da1" alt="Assignment Table Structure">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <h4 class="step-title">3. Create the submission table</h4>
+                    <ul class="step-list">
+                        <li>Define username and shortname both as VARCHAR(50)</li>
+                        <li>Define version as an INT</li>
+                        <li>Define submit_date as a DATE NOT NULL</li>
+                        <li>Define data as TEXT</li>
+                        <li>Set a composite primary key of (username, shortname, version)</li>
+                        <li>Add foreign keys referencing the student and assignment tables</li>
+                    </ul>
+                    <div class="sql-code">
+                        <img src="https://github.com/user-attachments/assets/ebdbe876-e568-4235-a939-03369a95250c" alt="Submission Table Creation">
+                    </div>
+                    <div class="image-container" data-fullscreen>
+                        <img src="https://github.com/user-attachments/assets/21702915-e26d-4c8a-9b81-cc6d5bb385c5" alt="Submission Table Structure">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Table Relationships</h2>
+            <div class="table-info">
                 <div class="relationship-details">
                     <h4>1. student table</h4>
-                    <ul>
+                    <ul class="step-list">
                         <li>Primary Key: username</li>
                         <li>Relationships:</li>
                         <li>One-to-Many with submission: One student (username) can have many submissions.</li>
                     </ul>
 
                     <h4>2. assignment table</h4>
-                    <ul>
+                    <ul class="step-list">
                         <li>Primary Key: shortname</li>
                         <li>Relationships:</li>
                         <li>One-to-Many with submission: One assignment (shortname) can have many submissions.</li>
                     </ul>
 
                     <h4>3. submission table</h4>
-                    <ul>
+                    <ul class="step-list">
                         <li>Composite Primary Key: (username, shortname, version)</li>
                         <li>Relationships:</li>
                         <li>Many-to-One with student: Each submission belongs to one student.</li>
@@ -428,77 +1027,24 @@
         </section>
 
         <section class="content-section">
-            <h2>Step by Step Process</h2>
-            <div class="table-info">
-                <h3>1. Create the student table</h3>
-                <ul>
-                    <li>Define username as a VARCHAR(50)</li>
-                    <li>Set username as the Primary Key</li>
-                </ul>
-                <div class="sql-code">
-                    <img src="https://github.com/user-attachments/assets/0ce8dffa-989c-4424-949d-665cb4f00e15" alt="Student Table Query">
-                </div>
-                <div class="image-container" data-fullscreen>
-                    <img src="https://github.com/user-attachments/assets/7ba23ca6-88e8-4de0-9e3b-c8b265f58300" alt="Student Table Structure">
-                    <div class="image-overlay"></div>
-                </div>
-            </div>
-
-            <div class="table-info">
-                <h3>2. Create the assignment table</h3>
-                <ul>
-                    <li>Define shortname as a VARCHAR(50) and set it as the Primary Key</li>
-                    <li>Define due_date as a DATE NOT NULL</li>
-                    <li>Define url as a VARCHAR(255), which can be null</li>
-                </ul>
-                <div class="sql-code">
-                    <img src="https://github.com/user-attachments/assets/5893a6fc-d642-4af6-a096-7efa86581baa" alt="Assignment Table Query">
-                </div>
-                <div class="image-container" data-fullscreen>
-                    <img src="https://github.com/user-attachments/assets/f0e0a2a6-344f-407f-862f-931c1e0f4da1" alt="Assignment Table Structure">
-                    <div class="image-overlay"></div>
-                </div>
-            </div>
-
-            <div class="table-info">
-                <h3>3. Create the submission table</h3>
-                <ul>
-                    <li>Define username and shortname both as VARCHAR(50)</li>
-                    <li>Define version as an INT</li>
-                    <li>Define submit_date as a DATE NOT NULL</li>
-                    <li>Define data as TEXT</li>
-                    <li>Set a composite primary key of (username, shortname, version)</li>
-                    <li>Add foreign keys referencing the student and assignment tables</li>
-                </ul>
-                <div class="sql-code">
-                    <img src="https://github.com/user-attachments/assets/ebdbe876-e568-4235-a939-03369a95250c" alt="Submission Table Query">
-                </div>
-                <div class="image-container" data-fullscreen>
-                    <img src="https://github.com/user-attachments/assets/21702915-e26d-4c8a-9b81-cc6d5bb385c5" alt="Submission Table Structure">
-                    <div class="image-overlay"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section">
             <h2>Entity Relationship Diagrams</h2>
             <div class="image-container" data-fullscreen>
-                <h3>EER Diagram</h3>
+                <h3>Enhanced Entity-Relationship (EER) Diagram</h3>
                 <img src="https://github.com/user-attachments/assets/c0c40b37-ed6a-461f-94d4-53117141d43f" alt="EER Diagram">
                 <div class="image-overlay"></div>
             </div>
             <div class="image-container" data-fullscreen>
-                <h3>The Basis for the Creation of the Relational Tables</h3>
-                <img src="https://github.com/user-attachments/assets/ea53264c-e53e-4698-a3a3-4baa40521064" alt="Basis ERD">
+                <h3>Relational Schema Diagram</h3>
+                <img src="https://github.com/user-attachments/assets/ea53264c-e53e-4698-a3a3-4baa40521064" alt="Relational Schema">
                 <div class="image-overlay"></div>
             </div>
         </section>
 
         <section class="download-section">
-            <h2>Download Project File</h2>
+            <h2>Download Project Documentation</h2>
             <a href="https://github.com/user-attachments/files/19718896/LAB.TASK.2.docx" class="download-btn" download>
                 <i class="fas fa-file-word"></i>
-                <span class="text">Click here to download the Lab Task 2 file</span>
+                <span class="text">Download Complete Documentation</span>
             </a>
         </section>
     </div>
@@ -514,7 +1060,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
-        // Create stars
+        // Create stars and cosmic dust
         function createStars() {
             const starsContainer = document.querySelector('.stars');
             const numberOfStars = 200;
@@ -541,6 +1087,129 @@
             }
         }
 
+        // Initialize
+        window.addEventListener('load', () => {
+            createStars();
+        });
+
+        // Enhanced Meteor Cursor Effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.querySelector('.custom-cursor');
+            let isMoving = false;
+            let moveTimeout;
+            let lastX = 0;
+            let lastY = 0;
+            let velocity = { x: 0, y: 0 };
+
+            function updateCursor(e) {
+                const currentX = e.clientX;
+                const currentY = e.clientY;
+                
+                velocity.x = currentX - lastX;
+                velocity.y = currentY - lastY;
+                
+                cursor.style.left = currentX + 'px';
+                cursor.style.top = currentY + 'px';
+
+                const speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+                
+                if (!isMoving) {
+                    isMoving = true;
+                    cursor.style.transform = `translate(-50%, -50%) scale(${0.8 + speed * 0.01})`;
+                }
+
+                clearTimeout(moveTimeout);
+                moveTimeout = setTimeout(() => {
+                    isMoving = false;
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 100);
+
+                if (speed > 5) {
+                    for (let i = 0; i < Math.min(speed / 5, 3); i++) {
+                        createTrail(currentX, currentY, speed);
+                    }
+                }
+
+                lastX = currentX;
+                lastY = currentY;
+            }
+
+            function createTrail(x, y, speed) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = x + 'px';
+                trail.style.top = y + 'px';
+                
+                const size = Math.min(4 + speed * 0.2, 8);
+                trail.style.width = `${size}px`;
+                trail.style.height = `${size}px`;
+                
+                document.body.appendChild(trail);
+
+                setTimeout(() => {
+                    trail.remove();
+                }, 500);
+            }
+
+            document.addEventListener('mousemove', updateCursor);
+
+            // Enhanced hover effects
+            const interactiveElements = document.querySelectorAll('a, button, .content-section, .image-container, .download-btn, .step-title, .sql-code, .table-info, .relationship-details li');
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                    if (el.classList.contains('step-title') || el.classList.contains('sql-code')) {
+                        createParticleExplosion(el);
+                    }
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
+
+            function createParticleExplosion(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                for (let i = 0; i < 8; i++) {
+                    createParticle(centerX, centerY);
+                }
+            }
+
+            function createParticle(x, y) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                document.body.appendChild(particle);
+
+                const destinationX = x + (Math.random() - 0.5) * 200;
+                const destinationY = y + (Math.random() - 0.5) * 200;
+                const rotation = Math.random() * 520;
+                const delay = Math.random() * 200;
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.transform = `rotate(${rotation}deg)`;
+                particle.style.opacity = '0';
+
+                setTimeout(() => {
+                    particle.style.transition = 'all 1s ease-out';
+                    particle.style.left = `${destinationX}px`;
+                    particle.style.top = `${destinationY}px`;
+                    particle.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        particle.style.opacity = '0';
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 1000);
+                    }, 500);
+                }, delay);
+            }
+        });
+
         // Fullscreen Image Modal
         const modal = document.querySelector('.modal');
         const modalImg = modal.querySelector('img');
@@ -566,11 +1235,6 @@
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
             }
-        });
-
-        // Initialize
-        window.addEventListener('load', () => {
-            createStars();
         });
 
         // Intersection Observer for animations
